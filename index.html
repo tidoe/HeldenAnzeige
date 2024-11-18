@@ -617,24 +617,24 @@
             </div>
             <br/>
             <div>
-                <input type="checkbox" onChange="updateHeroCount()" name="check-bb" value="BB"/>
+                <input type="checkbox" onChange="updateHeroCount()" name="check-bb" value="BB" checked/>
                 <label for="check-bb"><span class="short">BB</span><span class="long">Bonus-Box</span></label>
             </div>
             <div>
-                <input type="checkbox" onChange="updateHeroCount()" name="check-zh" value="ZH"/>
+                <input type="checkbox" onChange="updateHeroCount()" name="check-zh" value="ZH" checked/>
                 <label for="check-zh"><span class="short">ZH</span><span class="long">Zusatz-Helden</span></label>
             </div>
             <br class="long"/>
             <div>
-                <input type="checkbox" onChange="updateHeroCount()" name="check-nh" value="NH"/>
+                <input type="checkbox" onChange="updateHeroCount()" name="check-nh" value="NH" checked/>
                 <label for="check-nh"><span class="short">NH</span><span class="long">Neue Helden</span></label>
             </div>
             <div>
-                <input type="checkbox" onChange="updateHeroCount()" name="check-dh" value="DH"/>
+                <input type="checkbox" onChange="updateHeroCount()" name="check-dh" value="DH" checked/>
                 <label for="check-dh"><span class="short">DH</span><span class="long">Dunkle Helden</span></label>
             </div>
             <div>
-                <input type="checkbox" onChange="updateHeroCount()" name="check-mh" value="MH"/>
+                <input type="checkbox" onChange="updateHeroCount()" name="check-mh" value="MH" checked/>
                 <label for="check-mh"><span class="short">MH</span><span class="long">Magische Helden</span></label>
             </div>
             <br class="long"/>
@@ -642,27 +642,27 @@
                 <div class="long">
                     <label>Fan-Helden</label>
                     <div>
-                        <input type="checkbox" onChange="updateHeroCount()" name="check-fh-no" value="FH-NO"/>
+                        <input type="checkbox" onChange="updateHeroCount()" name="check-fh-no" value="FH-NO" checked/>
                         <label for="check-fh-no">Neue Nord-Helden</label>
                     </div>
                     <div>
-                        <input type="checkbox" onChange="updateHeroCount()" name="check-fh-rg" value="FH-RG"/>
+                        <input type="checkbox" onChange="updateHeroCount()" name="check-fh-rg" value="FH-RG" checked/>
                         <label for="check-fh-rg"><q>Neue</q> Helden (Ruhelose Geister)</label>
                     </div>
                     <div>
-                        <input type="checkbox" onChange="updateHeroCount()" name="check-fh-wf" value="FH-FW"/>
+                        <input type="checkbox" onChange="updateHeroCount()" name="check-fh-wf" value="FH-FW" checked/>
                         <label for="check-fh-fw">Feuer-Helden (Feuer und Wasser)</label>
                     </div>
                     <div>
-                        <input type="checkbox" onChange="updateHeroCount()" name="check-fh-kh" value="FH-KH"/>
+                        <input type="checkbox" onChange="updateHeroCount()" name="check-fh-kh" value="FH-KH" checked/>
                         <label for="check-fh-kh">Kreative Helden</label>
                     </div>
                     <div>
-                        <input type="checkbox" onChange="updateHeroCount()" name="check-fh-eh" value="FH-EH"/>
+                        <input type="checkbox" onChange="updateHeroCount()" name="check-fh-eh" value="FH-EH" checked/>
                         <label for="check-fh-eh">Einfache Helden</label>
                     </div>
                     <div>
-                        <input type="checkbox" onChange="updateHeroCount()" name="check-fh-fh" value="FH-FH"/>
+                        <input type="checkbox" onChange="updateHeroCount()" name="check-fh-fh" value="FH-FH" checked/>
                         <label for="check-fh-fh">Sonstige Fan-Helden</label>
                     </div>
                 </div>
@@ -938,7 +938,9 @@
                 document.getElementById("name").innerHTML = '<span style="color: ' + hero["color"] + '"><span>' + [...Array(hero["names"].length).keys()].map(k => '<' + hero["sexes"][k] + '>' + hero["names"][k] + '</' + hero["sexes"][k] + '>').join("") + '</span> <span>' + [...Array(hero["ranks"].length).keys()].map(k => [hero["ranks"][k], '<span' + (k == 0 && document.getElementById("sortBy").innerHTML == "Rang" ? ' id="singleRank"' : '') + '>' + "#" + ([1, 2, 3, 4].includes(hero["ranks"][k]) && hero["group"] == "NO" ? ["I", "II", "III", "IV"][hero["ranks"][k]-1] : hero["ranks"][k].toFixed(1).replace(/[\.,]0/, "").replace(/[\.,]5/, "½")) + '</span>']).sort(function(a, b){ return a[0] - b[0]; }).map(a => a[1]).join("/") + '</span></span><br/><span style="color:' + hero["color"] + '">' + hero["place"] + '</span>';
                 if(fastImgLoading){
                     if(document.getElementById("image").innerHTML == ""){
-                        document.getElementById("image").innerHTML = heroesByDate.map(hero => '<span class="' + (hero["names"][0] + (hero["place"] == "" ? "" : " " + hero["place"])).replaceAll(" ", "_") +' hidden">' + [...Array(hero["names"].length).keys()].map(k => '<' + hero["sexes"][k] + '>' + ["Karte", "Tafel-1", "Tafel-2", "Tafel-3", "Tafel-4", "Tafel-5", "Tafel-6", "Wiki"].map(folder => '<img class="' + folder + '" src="Bilder/' + folder + '/' + hero["names"][k] + (hero["place"] == "" ? "" : " " + hero["place"]) + '.jpg" onerror="this.remove()"/>').join("") + '</' + hero["sexes"][k] + '>').join("") + '</span>').join("");
+                        heroesByDate.forEach((hero) => {
+                            document.getElementById("image").insertAdjacentHTML("beforeend", '<span class="' + (hero["names"][0] + (hero["place"] == "" ? "" : " " + hero["place"])).replaceAll(" ", "_") +' hidden">' + [...Array(hero["names"].length).keys()].map(k => '<' + hero["sexes"][k] + '>' + ["Karte", "Tafel-1", "Tafel-2", "Tafel-3", "Tafel-4", "Tafel-5", "Tafel-6", "Wiki"].map(folder => '<img class="' + folder + '" src="Bilder/' + folder + '/' + hero["names"][k] + (hero["place"] == "" ? "" : " " + hero["place"]) + '.jpg" onerror="this.remove()"/>').join("") + '</' + hero["sexes"][k] + '>').join("") + '</span>');
+                        });
                     }
                     else {
                         document.getElementById("image").querySelector("span:not(.hidden)").classList.add("hidden");
