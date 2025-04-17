@@ -972,15 +972,12 @@
                 document.getElementById("group").innerHTML = groups[hero["group"]];
                 document.getElementById("name").innerHTML = '<span style="color: ' + hero["color"] + '"><span>' + [...Array(hero["names"].length).keys()].map(k => '<' + hero["sexes"][k] + '>' + hero["names"][k] + '</' + hero["sexes"][k] + '>').join("") + '</span> <span>' + [...Array(hero["ranks"].length).keys()].map(k => [hero["ranks"][k], '<span' + (k == 0 && document.getElementById("sortBy").innerHTML == "Rang" ? ' id="singleRank"' : '') + '>' + "#" + ([1, 2, 3, 4].includes(hero["ranks"][k]) && hero["group"] == "NO" ? ["I", "II", "III", "IV"][hero["ranks"][k]-1] : hero["ranks"][k].toFixed(1).replace(/[\.,]0/, "").replace(/[\.,]5/, "½")) + '</span>']).sort(function(a, b){ return a[0] - b[0]; }).map(a => a[1]).join("/") + '</span></span><br/><span style="color:' + hero["color"] + '">' + hero["place"] + '</span>';
                 if(fastImgLoading){
-                    if(document.getElementById("image").innerHTML == ""){
-                        heroesByDate.forEach((hero) => {
-                            document.getElementById("image").insertAdjacentHTML("beforeend", '<span class="' + (hero["names"][0] + (hero["place"] == "" ? "" : " " + hero["place"])).replaceAll(" ", "_") +' hidden">' + [...Array(hero["names"].length).keys()].map(k => '<' + hero["sexes"][k] + '>' + ["Karte", "Tafel-1", "Tafel-2", "Tafel-3", "Tafel-4", "Tafel-5", "Tafel-6", "Wiki"].map(folder => '<img class="' + folder + '" src="Bilder/' + folder + '/' + hero["names"][k] + (hero["place"] == "" ? "" : " " + hero["place"]) + '.jpg" onerror="this.remove()"/>').join("") + '</' + hero["sexes"][k] + '>').join("") + '</span>');
-                        });
+                    var heroClass = (hero["names"][0] + (hero["place"] == "" ? "" : " " + hero["place"])).replaceAll(" ", "_");
+                    if(!document.getElementById("image").querySelector("." + heroClass)){
+                        document.getElementById("image").insertAdjacentHTML("beforeend", '<span class="' + heroClass +' hidden">' + [...Array(hero["names"].length).keys()].map(k => '<' + hero["sexes"][k] + '>' + ["Karte", "Tafel-1", "Tafel-2", "Tafel-3", "Tafel-4", "Tafel-5", "Tafel-6", "Wiki"].map(folder => '<img class="' + folder + '" src="Bilder/' + folder + '/' + hero["names"][k] + (hero["place"] == "" ? "" : " " + hero["place"]) + '.jpg" onerror="this.remove()"/>').join("") + '</' + hero["sexes"][k] + '>').join("") + '</span>');
                     }
-                    else {
-                        document.getElementById("image").querySelector("span:not(.hidden)").classList.add("hidden");
-                    }
-                    document.getElementById("image").querySelector("." + (hero["names"][0] + (hero["place"] == "" ? "" : " " + hero["place"])).replaceAll(" ", "_")).classList.remove("hidden");
+                    document.getElementById("image").querySelectorAll("span:not(.hidden)").forEach(span => span.classList.add("hidden"));
+                    document.getElementById("image").querySelector("." + heroClass).classList.remove("hidden");
                 }
                 else {
                     document.getElementById("image").innerHTML = [...Array(hero["names"].length).keys()].map(k => '<' + hero["sexes"][k] + '>' + ["Karte", "Tafel-1", "Tafel-2", "Tafel-3", "Tafel-4", "Tafel-5", "Tafel-6", "Wiki"].map(folder => '<img class="' + folder + '" src="Bilder/' + folder + '/' + hero["names"][k] + (hero["place"] == "" ? "" : " " + hero["place"]) + '.jpg" onerror="this.remove()"/>').join("") + '</' + hero["sexes"][k] + '>').join("");
