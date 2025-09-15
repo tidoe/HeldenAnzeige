@@ -1047,6 +1047,14 @@
             }
             loadFirstHero();
             updateHeroCount();
+            document.addEventListener("keydown", (e) => {
+                if(e.key == "ArrowLeft"){
+                    loadPrevHero();
+                }
+                else if(e.key == "ArrowRight"){
+                    loadNextHero();
+                }
+            });
         </script>
     </body>
 </html>
